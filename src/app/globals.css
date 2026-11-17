@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Design tokens from Figma frame "Desktop - 1" (1:2) */
+  --color-frame: #e2ecf7;
+  --color-gold: #d4af37;
+  --color-ink: #525252;
+  --font-script: var(--font-parisienne);
+  --font-narrow: "Arial Narrow", "Arial Nova Cond", Arial, Helvetica, sans-serif;
+}
+
+:root {
+  /*
+   * 1 Figma px. The 1440×1024 frame is rendered 1:1 at a 1440×1024 viewport
+   * and scaled proportionally (contain) for any other viewport size.
+   */
+  --px: min(calc(100vw / 1440), calc(100dvh / 1024));
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #f3eee2;
+}
