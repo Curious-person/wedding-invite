@@ -2,11 +2,46 @@
 
 @theme inline {
   /* Design tokens from Figma frame "Desktop - 1" (1:2) */
-  --color-frame: #e2ecf7;
   --color-gold: #d4af37;
   --color-ink: #525252;
   --font-script: var(--font-parisienne);
   --font-narrow: "Arial Narrow", "Arial Nova Cond", Arial, Helvetica, sans-serif;
+}
+
+/* Envelope intro "Click here" hint: gentle fade/rise, then a soft breathing pulse. */
+@theme {
+  --animate-intro-hint: intro-hint-in 1.2s ease-out both, intro-hint-pulse 2.8s ease-in-out 1.2s infinite;
+  --animate-intro-hint-reduced: intro-hint-fade 1.2s ease-out both;
+
+  @keyframes intro-hint-in {
+    from {
+      opacity: 0;
+      translate: 0 0.5em;
+    }
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  @keyframes intro-hint-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes intro-hint-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
 }
 
 :root {
@@ -24,6 +59,6 @@ body {
 
 body {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: #f3eee2;
 }
