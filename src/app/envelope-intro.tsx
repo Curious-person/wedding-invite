@@ -7,8 +7,10 @@ import { preload } from "react-dom";
 const FRAME_COUNT = 300;
 const FPS = 30;
 const FRAME_MS = 1000 / FPS;
-/** The last N frames fade the whole layer from opaque to fully transparent. */
-const FADE_FRAMES = 50;
+/** Fade starts at this frame (1-based) and fades to full transparency over 1.5s (45 frames at 30 FPS). */
+const FADE_START_FRAME = 80;
+const FADE_FRAMES = Math.round(1.5 * FPS);
+const END_FRAME = Math.min(FRAME_COUNT, FADE_START_FRAME + FADE_FRAMES);
 const IDLE_HINT_MS = 15_000;
 /** Native frame size — used for the hint's positioning box (the canvas reads naturalWidth/Height). */
 const FRAME_W = 1920;
@@ -49,7 +51,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
   /** One-shot playback guard: survives re-renders, flips exactly once. */
   const startedRef = useRef(false);
   /** Bridge from the click handler into the imperative player created in the effect. */
-  const playRef = useRef<() => void>(() => {});
+  const playRef = useRef<() => void>(() => { });
   const pendingStartRef = useRef(false);
 
   // ── Imperative canvas player: preload, draw, play. Runs once per mount. ──
@@ -81,10 +83,10 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         ctx.fillRect(0, 0, cw, ch);
       }
       if (current) {
-        // "contain": preserve aspect ratio, never crop, center in the viewport.
+        // "cover": preserve aspect ratio, fill the viewport, crop the overflow evenly around the center.
         const iw = current.naturalWidth;
         const ih = current.naturalHeight;
-        const scale = Math.min(cw / iw, ch / ih);
+        const scale = Math.max(cw / iw, ch / ih);
         const dw = iw * scale;
         const dh = ih * scale;
         ctx.drawImage(current, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
@@ -112,7 +114,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
     overlay.style.background = "transparent";
 
     const decode = (i: number) => {
-      frames[i]?.decode().catch(() => {});
+      frames[i]?.decode().catch(() => { });
     };
 
     const finish = () => {
@@ -131,7 +133,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         elapsed += Math.min(now - last, MAX_STEP_MS);
         last = now;
         const index = Math.floor(elapsed / FRAME_MS);
-        if (index >= FRAME_COUNT) {
+        if (index >= END_FRAME) {
           finish();
           return;
         }
@@ -139,8 +141,8 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
           shown = index;
           // A missing/failed frame simply holds the previous one.
           current = frames[index] ?? current;
-          const fromEnd = FRAME_COUNT - 1 - index;
-          alpha = fromEnd < FADE_FRAMES ? fromEnd / FADE_FRAMES : 1; // reaches 0 on the final frame
+          const fromEnd = END_FRAME - 1 - index;
+          alpha = fromEnd < FADE_FRAMES ? fromEnd / FADE_FRAMES : 1; // reaches 0 when fade completes
           paint();
           decode(index + DECODE_AHEAD);
         }
@@ -207,7 +209,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
       resizeObserver.disconnect();
       overlay.removeEventListener("wheel", block);
       overlay.removeEventListener("touchmove", block);
-      playRef.current = () => {};
+      playRef.current = () => { };
       frames.length = 0;
       current = null;
     };
@@ -261,7 +263,7 @@ function IntroPlayer({ onDone }: { onDone: () => void }) {
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
           <div
             className="relative"
-            style={{ aspectRatio: `${FRAME_W} / ${FRAME_H}`, width: `min(100vw, calc(100dvh * ${FRAME_W / FRAME_H}))` }}
+            style={{ aspectRatio: `${FRAME_W} / ${FRAME_H}`, width: `max(100vw, calc(100dvh * ${FRAME_W / FRAME_H}))` }}
           >
             <p
               role="status"
