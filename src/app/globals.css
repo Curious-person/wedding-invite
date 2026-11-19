@@ -52,6 +52,16 @@
   --px: min(calc(100vw / 1440), calc(100dvh / 1024));
 }
 
+/*
+ * Mobile (< Tailwind `md`, 48rem): the page reflows into a single column (see `max-md:` classes in
+ * page.tsx), so 1 design px scales with width only — a 540-unit-wide canvas.
+ */
+@media (width < 48rem) {
+  :root {
+    --px: calc(100vw / 540);
+  }
+}
+
 html,
 body {
   height: 100%;

@@ -3,15 +3,15 @@ import EnvelopeIntro from "./envelope-intro";
 
 /** Shared style for the small uppercase Arial Narrow labels (24px, #525252). */
 const label =
-  "whitespace-nowrap font-narrow [font-stretch:condensed] uppercase leading-normal text-ink text-[calc(24*var(--px))]";
+  "whitespace-nowrap font-narrow [font-stretch:condensed] uppercase leading-normal text-ink text-[calc(24*var(--px))] max-md:text-[calc(20*var(--px))]";
 
 /** Shared style for the Parisienne script names (#d4af37). */
 const script =
-  "absolute m-0 whitespace-nowrap font-script font-normal leading-normal text-gold";
+  "absolute m-0 whitespace-nowrap font-script font-normal leading-normal text-gold max-md:static max-md:leading-[1.05]";
 
 /** Section title — Parisienne, gold, centered (in-flow counterpart of `script`). */
 const heading =
-  "m-0 text-center font-script font-normal leading-[1.1] text-gold text-[calc(112*var(--px))]";
+  "m-0 text-center font-script font-normal leading-[1.1] text-gold text-[calc(112*var(--px))] max-md:text-[calc(76*var(--px))]";
 
 /** Sub-section script title (e.g. "Direction", "Entourage"). */
 const subheading =
@@ -22,7 +22,7 @@ const title = `${label} m-0 font-bold`;
 
 /** Wrapping Arial Narrow body copy (20px, #525252). */
 const body =
-  "m-0 font-narrow [font-stretch:condensed] leading-[1.4] text-ink text-[calc(20*var(--px))]";
+  "m-0 font-narrow [font-stretch:condensed] leading-[1.4] text-ink text-[calc(20*var(--px))] max-md:text-[calc(22*var(--px))]";
 
 /** Uppercase variant of `body` for short informational copy. */
 const bodyCaps = `${body} uppercase`;
@@ -82,7 +82,7 @@ export default function Home() {
       <EnvelopeIntro />
 
       {/* ───────────────────────── Hero ───────────────────────── */}
-      <header className="relative flex h-dvh w-full items-center justify-center overflow-hidden">
+      <header className="relative flex h-dvh w-full items-center justify-center overflow-hidden max-md:h-auto max-md:min-h-dvh">
         {/* Letterbox fill so non-1440×1024 viewports blend with the wallpaper */}
         <Image
           src="/images/damask-wallpaper.png"
@@ -93,13 +93,13 @@ export default function Home() {
           className="pointer-events-none object-cover mask-b-from-70% mask-b-to-transparent"
         />
 
-        {/* Figma frame "Desktop - 1" (1:2) — 1440 × 1024 */}
+        {/* Figma frame "Desktop - 1" (1:2) — 1440 × 1024. On mobile it reflows into a centered column. */}
         <section
           aria-label="Wedding invitation"
-          className="relative h-[calc(1024*var(--px))] w-[calc(1440*var(--px))] shrink-0 overflow-hidden"
+          className="relative h-[calc(1024*var(--px))] w-[calc(1440*var(--px))] shrink-0 overflow-hidden max-md:flex max-md:h-auto max-md:min-h-dvh max-md:w-full max-md:flex-col max-md:items-center max-md:justify-center max-md:gap-[calc(28*var(--px))] max-md:px-[calc(32*var(--px))] max-md:py-[calc(72*var(--px))]"
         >
           {/* 3:2 Elegant Ivory Floral Damask Wallpaper — 1819 × 1024, centered */}
-          <div className="absolute top-0 left-[calc(50%-0.5*var(--px))] h-[calc(1024*var(--px))] w-[calc(1819*var(--px))] -translate-x-1/2">
+          <div className="absolute top-0 left-[calc(50%-0.5*var(--px))] h-[calc(1024*var(--px))] w-[calc(1819*var(--px))] -translate-x-1/2 max-md:hidden">
             <Image
               src="/images/damask-wallpaper.png"
               alt=""
@@ -111,55 +111,58 @@ export default function Home() {
           </div>
 
           {/* 4:16 You are invited */}
-          <p className={`${label} absolute top-[calc(72*var(--px))] left-[calc(50%+0.5*var(--px))] -translate-x-1/2 text-center`}>
+          <p data-gsap="hero" className={`${label} absolute top-[calc(72*var(--px))] left-[calc(50%+0.5*var(--px))] -translate-x-1/2 text-center max-md:static max-md:translate-x-0`}>
             You are cordially invited
           </p>
 
-          {/* 3:9 Noli · 10:36 & · 10:35 Eling */}
-          <h1 aria-label="Noli & Eling" className="m-0">
-            <span aria-hidden className={`${script} top-[calc(114*var(--px))] left-[calc(146*var(--px))] text-[calc(257*var(--px))]`}>
+          {/* 3:9 Noli · 10:36 & · 10:35 Eling — stacked monogram-style on mobile */}
+          <h1 aria-label="Noli & Eling" className="m-0 max-md:flex max-md:w-full max-md:max-w-[calc(400*var(--px))] max-md:flex-col max-md:items-center">
+            <span data-gsap="hero" aria-hidden className={`${script} top-[calc(114*var(--px))] left-[calc(146*var(--px))] text-[calc(257*var(--px))] max-md:self-start max-md:text-[calc(170*var(--px))]`}>
               Noli
             </span>
-            <span aria-hidden className={`${script} top-[calc(225*var(--px))] left-[calc(658*var(--px))] text-[calc(128*var(--px))]`}>
+            <span data-gsap="hero" aria-hidden className={`${script} top-[calc(225*var(--px))] left-[calc(658*var(--px))] text-[calc(128*var(--px))] max-md:-my-[calc(28*var(--px))] max-md:text-[calc(90*var(--px))]`}>
               &amp;
             </span>
-            <span aria-hidden className={`${script} top-[calc(114*var(--px))] left-[calc(796*var(--px))] text-[calc(257*var(--px))]`}>
+            <span data-gsap="hero" aria-hidden className={`${script} top-[calc(114*var(--px))] left-[calc(796*var(--px))] text-[calc(257*var(--px))] max-md:self-end max-md:text-[calc(170*var(--px))]`}>
               Eling
             </span>
           </h1>
 
-          {/* 10:37 Vintage Framed Graduation Portrait — 262 × 381 */}
-          <div className="absolute top-[calc(445*var(--px))] left-[calc(459*var(--px))] h-[calc(381*var(--px))] w-[calc(262*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)]">
-            <Image
-              src="/images/noli-framed.png"
-              alt="Framed graduation portrait of Noli"
-              fill
-              sizes="524px"
-              className="object-cover"
-            />
-          </div>
+          {/* Portraits — absolutely positioned on desktop (wrapper is `display: contents`), side by side on mobile */}
+          <div className="contents max-md:flex max-md:items-center max-md:justify-center max-md:gap-[calc(18*var(--px))]">
+            {/* 10:37 Vintage Framed Graduation Portrait — 262 × 381 */}
+            <div data-gsap="hero" className="absolute top-[calc(445*var(--px))] left-[calc(459*var(--px))] h-[calc(381*var(--px))] w-[calc(262*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] max-md:relative max-md:top-auto max-md:left-auto max-md:h-[calc(313*var(--px))] max-md:w-[calc(215*var(--px))]">
+              <Image
+                src="/images/noli-framed.png"
+                alt="Framed graduation portrait of Noli"
+                fill
+                sizes="(max-width: 767px) 40vw, 524px"
+                className="object-cover"
+              />
+            </div>
 
-          {/* 10:38 Vintage Framed Portrait of a Young Woman — 240 × 373, r30 */}
-          <div className="absolute top-[calc(449*var(--px))] left-[calc(741*var(--px))] h-[calc(373*var(--px))] w-[calc(240*var(--px))] rounded-[calc(30*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)]">
-            <div className="absolute inset-0 overflow-hidden rounded-[calc(30*var(--px))]">
-              <div className="absolute top-[-1.17%] left-[-1.67%] h-[102.33%] w-[101.67%]">
-                <Image
-                  src="/images/eling-framed.png"
-                  alt="Framed portrait of Eling"
-                  fill
-                  sizes="488px"
-                />
+            {/* 10:38 Vintage Framed Portrait of a Young Woman — 240 × 373, r30 */}
+            <div data-gsap="hero" className="absolute top-[calc(449*var(--px))] left-[calc(741*var(--px))] h-[calc(373*var(--px))] w-[calc(240*var(--px))] rounded-[calc(30*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] max-md:relative max-md:top-auto max-md:left-auto max-md:h-[calc(306*var(--px))] max-md:w-[calc(197*var(--px))]">
+              <div className="absolute inset-0 overflow-hidden rounded-[calc(30*var(--px))]">
+                <div className="absolute top-[-1.17%] left-[-1.67%] h-[102.33%] w-[101.67%]">
+                  <Image
+                    src="/images/eling-framed.png"
+                    alt="Framed portrait of Eling"
+                    fill
+                    sizes="(max-width: 767px) 40vw, 488px"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
           {/* 3:15 Venue (Arial Narrow Bold) */}
-          <p className={`${label} absolute top-[calc(872*var(--px))] left-[calc(50%+2*var(--px))] -translate-x-1/2 text-center font-bold`}>
+          <p data-gsap="hero" className={`${label} absolute top-[calc(872*var(--px))] left-[calc(50%+2*var(--px))] -translate-x-1/2 text-center font-bold max-md:static max-md:translate-x-0 max-md:whitespace-normal`}>
             {VENUE}
           </p>
 
           {/* 10:40 Date • Time */}
-          <div className="absolute top-[calc(912*var(--px))] left-[calc(50%+2*var(--px))] flex -translate-x-1/2 items-center justify-center gap-[calc(16*var(--px))]">
+          <div data-gsap="hero" className="absolute top-[calc(912*var(--px))] left-[calc(50%+2*var(--px))] flex -translate-x-1/2 items-center justify-center gap-[calc(16*var(--px))] max-md:static max-md:-mt-[calc(16*var(--px))] max-md:translate-x-0 max-md:flex-wrap max-md:gap-x-[calc(12*var(--px))] max-md:gap-y-[calc(4*var(--px))]">
             <p className={`${label} m-0 shrink-0`}>
               <time dateTime="12-12">12/12</time>
             </p>
@@ -187,15 +190,15 @@ export default function Home() {
       </header>
 
       {/* ───────────────────────── Details ───────────────────────── */}
-      <div className="mx-auto w-[calc(1440*var(--px))] px-[calc(160*var(--px))] pb-[calc(160*var(--px))]">
+      <div className="mx-auto w-[calc(1440*var(--px))] px-[calc(160*var(--px))] pb-[calc(160*var(--px))] max-md:w-full max-md:px-[calc(36*var(--px))] max-md:pb-[calc(140*var(--px))]">
         {/* Wedding Timeline */}
-        <section aria-labelledby="timeline-title" className="pt-[calc(96*var(--px))]">
-          <h2 id="timeline-title" className={heading}>
+        <section data-gsap="section" aria-labelledby="timeline-title" className="pt-[calc(96*var(--px))] max-md:pt-[calc(72*var(--px))]">
+          <h2 data-gsap="item" id="timeline-title" className={heading}>
             Wedding Timeline
           </h2>
-          <ol className="m-0 mt-[calc(48*var(--px))] grid list-none grid-cols-2 gap-x-[calc(120*var(--px))] gap-y-[calc(64*var(--px))] p-0">
+          <ol className="m-0 mt-[calc(48*var(--px))] grid list-none grid-cols-2 gap-x-[calc(120*var(--px))] gap-y-[calc(64*var(--px))] p-0 max-md:grid-cols-1 max-md:gap-y-[calc(52*var(--px))]">
             {timeline.map((item) => (
-              <li key={item.time} className="flex flex-col items-center gap-[calc(8*var(--px))] text-center">
+              <li data-gsap="item" key={item.time} className="flex flex-col items-center gap-[calc(8*var(--px))] text-center">
                 <p className="m-0 font-narrow [font-stretch:condensed] leading-normal text-ink text-[calc(44*var(--px))]">
                   {item.time}
                 </p>
@@ -207,18 +210,18 @@ export default function Home() {
         </section>
 
         {/* Dresscode */}
-        <section aria-labelledby="dresscode-title" className="flex flex-col items-center pt-[calc(140*var(--px))]">
-          <h2 id="dresscode-title" className={heading}>
+        <section data-gsap="section" aria-labelledby="dresscode-title" className="flex flex-col items-center pt-[calc(140*var(--px))] max-md:pt-[calc(110*var(--px))]">
+          <h2 data-gsap="item" id="dresscode-title" className={heading}>
             Dresscode
           </h2>
-          <p className={`${bodyCaps} mt-[calc(24*var(--px))] max-w-[calc(420*var(--px))] text-center`}>
+          <p data-gsap="item" className={`${bodyCaps} mt-[calc(24*var(--px))] max-w-[calc(420*var(--px))] text-center`}>
             Formal attire is requested.
             <br />
             Feel free to draw inspirations from these tones.
           </p>
           <ul aria-label="Suggested tones" className="m-0 mt-[calc(40*var(--px))] flex list-none gap-[calc(56*var(--px))] p-0">
             {dressTones.map((pair, i) => (
-              <li key={i} className="flex">
+              <li data-gsap="item" key={i} className="flex">
                 {pair.map((tone, j) => (
                   <span
                     key={tone.hex}
@@ -235,9 +238,9 @@ export default function Home() {
         </section>
 
         {/* Venue & Direction */}
-        <section aria-labelledby="direction-title" className="grid grid-cols-2 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))]">
-          {/* Venue card — double gold frame */}
-          <div className="rounded-[calc(30*var(--px))] border-[calc(2*var(--px))] border-gold p-[calc(10*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)]">
+        <section data-gsap="section" aria-labelledby="direction-title" className="grid grid-cols-2 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))] max-md:grid-cols-1 max-md:gap-y-[calc(48*var(--px))] max-md:pt-[calc(110*var(--px))]">
+          {/* Venue card — double gold frame (below the Direction copy on mobile) */}
+          <div data-gsap="item" className="rounded-[calc(30*var(--px))] border-[calc(2*var(--px))] border-gold p-[calc(10*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] max-md:order-last">
             <div className="flex flex-col items-center gap-[calc(24*var(--px))] rounded-[calc(22*var(--px))] border-[calc(1*var(--px))] border-gold/60 px-[calc(32*var(--px))] py-[calc(36*var(--px))]">
               <p className={`${bodyCaps} max-w-[calc(380*var(--px))] text-center`}>
                 Our celebration will take place in the heart of Napa Valley, surrounded by beautiful vineyards and
@@ -248,7 +251,7 @@ export default function Home() {
                 src={`https://maps.google.com/maps?q=${encodeURIComponent(VENUE)}&z=15&output=embed`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="block h-[calc(260*var(--px))] w-full rounded-[calc(8*var(--px))] border-0"
+                className="block h-[calc(260*var(--px))] w-full rounded-[calc(8*var(--px))] border-0 max-md:h-[calc(340*var(--px))]"
               />
               <a
                 href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(VENUE)}`}
@@ -262,7 +265,7 @@ export default function Home() {
           </div>
 
           {/* Direction copy */}
-          <div className="flex flex-col items-center gap-[calc(16*var(--px))] text-center">
+          <div data-gsap="item" className="flex flex-col items-center gap-[calc(16*var(--px))] text-center">
             <h2 id="direction-title" className={subheading}>
               Direction
             </h2>
@@ -284,19 +287,19 @@ export default function Home() {
         </section>
 
         {/* Entourage & Gift Registry */}
-        <div className="grid grid-cols-1 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))]">
-          <section aria-labelledby="entourage-title" className="flex flex-col items-center text-center">
-            <h2 id="entourage-title" className={subheading}>
+        <div className="grid grid-cols-1 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))] max-md:pt-[calc(110*var(--px))]">
+          <section data-gsap="section" aria-labelledby="entourage-title" className="flex flex-col items-center text-center">
+            <h2 data-gsap="item" id="entourage-title" className={subheading}>
               Entourage
             </h2>
-            <p className={`${bodyCaps} mt-[calc(16*var(--px))]`}>
+            <p data-gsap="item" className={`${bodyCaps} mt-[calc(16*var(--px))]`}>
               With the love and support
               <br />
               of those closest to us
             </p>
             <dl className="m-0 mt-[calc(40*var(--px))] flex flex-col gap-[calc(32*var(--px))]">
               {entourage.map((group) => (
-                <div key={group.role} className="flex flex-col items-center gap-[calc(6*var(--px))]">
+                <div data-gsap="item" key={group.role} className="flex flex-col items-center gap-[calc(6*var(--px))]">
                   <dt className={title}>{group.role}</dt>
                   <dd className={`${bodyCaps} m-0`}>{group.names}</dd>
                 </div>

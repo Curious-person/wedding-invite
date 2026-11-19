@@ -33,6 +33,10 @@ The design is a fixed **1440 × 1024 px Figma frame** that scales proportionally
 
 All pixel values in the JSX use `calc(N*var(--px))` — never raw `px` values. This is the core layout invariant; preserve it on every edit.
 
+### Mobile (`max-md:`, < 48rem)
+
+Below Tailwind's `md` breakpoint `--px` becomes `calc(100vw / 540)` (width-only, a 540-unit canvas) and the page reflows via `max-md:` overrides in `page.tsx`: the hero's absolutely-positioned Figma layers become a centered flex column (`max-md:static`, names stacked monogram-style, portraits side by side inside a `contents` wrapper), and two-column grids collapse to one column. Desktop classes are untouched — add mobile tweaks as `max-md:` variants alongside them.
+
 ### Design tokens (`globals.css`)
 
 | Token | Value | Usage |
