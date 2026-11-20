@@ -72,10 +72,11 @@ const entourage = [
   {
     role: "Secondary Sponsor",
     names: [
-      "Luna, Cloud",
       "Mary Grace P. Delos Reyes",
       "Jeanette D. Abgao",
       "Noelyn D. Rico",
+      "Julian Cloud Baldelovar",
+      "Luna Cerise Saycon"
     ],
   },
 ];
