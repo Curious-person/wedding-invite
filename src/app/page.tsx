@@ -32,47 +32,52 @@ const button =
   "inline-flex items-center justify-center rounded-[calc(8*var(--px))] bg-ink px-[calc(40*var(--px))] py-[calc(16*var(--px))] font-narrow [font-stretch:condensed] font-bold uppercase tracking-[0.08em] text-[#f3eee2] text-[calc(20*var(--px))] transition-colors hover:bg-gold hover:text-ink focus-visible:outline-[calc(2*var(--px))] focus-visible:outline-offset-[calc(4*var(--px))] focus-visible:outline-gold";
 
 const VENUE = "Transfiguration of Christ Parish Church";
+const RECEPTION_VENUE = "Max's Restaurant Antipolo";
+const RECEPTION_ADDRESS = "83 Santo Niño Street Antipolo Calabarzon";
+const RECEPTION_MAP_URL =
+  "https://www.bing.com/maps?&mepi=0~~Embedded~Address_Link&ty=18&q=Max%27s%20Restaurant%20Antipolo&ss=ypid.YN85B44DE8248877FA&ppois=14.581520080566406_121.18001556396484_Max%27s%20Restaurant%20Antipolo_YN85B44DE8248877FA~&cp=14.58152~121.180016&v=2&sV=1&FORM=MPSRPL";
 
 const timeline = [
   {
-    time: "4.00 PM",
+    time: "7:30 AM",
     title: "Ceremony Begins",
     text: "Join us as we begin our forever with a heartfelt wedding ceremony surrounded by love and family.",
   },
   {
-    time: "5.00 PM",
+    time: "10:00 AM",
     title: "Cocktail Hour",
     text: "Enjoy a delightful cocktail hour filled with signature drinks, light bites, and warm conversations.",
   },
   {
-    time: "6.30 PM",
-    title: "Dinner Service",
-    text: "A carefully curated dinner experience awaits as we celebrate this special evening together.",
-  },
-  {
-    time: "7.30 PM",
-    title: "Celebration & Dance",
-    text: "Let the music play and the celebration begin — dance the night away with us under the stars.",
+    time: "11:00 AM",
+    title: "Lunch Service",
+    text: "A carefully curated lunch experience awaits as we celebrate this special day together.",
   },
 ];
 
-/** Dress-code tones, shown as two overlapping pairs. */
+/** Dress-code tones, shown as overlapping swatches. */
 const dressTones = [
-  [
-    { name: "Deep red", hex: "#a8141e" },
-    { name: "Blush pink", hex: "#f08a8f" },
-  ],
-  [
-    { name: "Black", hex: "#111111" },
-    { name: "Marigold", hex: "#f0c061" },
-  ],
+  { name: "Dusty blue", hex: "#A9BED6" },
+  { name: "Soft yellow", hex: "#F6E3A6" },
+  { name: "Ivory", hex: "#FAF7F1" },
+  { name: "Sage green", hex: "#B7C6B0" },
+  { name: "Gold", hex: "#D4AF37" },
 ];
 
 const entourage = [
-  { role: "Best Man", names: "Michael Smith, John Storm, Andreas Lucky" },
-  { role: "Bridesmaids", names: "Emily Brown, Luce Anderson, Zara Witney" },
-  { role: "Groomsmen", names: "Christian Jake, Atony" },
-  { role: "Flower Girl", names: "Lily Taylor" },
+  {
+    role: "Principal Sponsors",
+    names: ["Mr. Salvador F. Futol, Mrs. Brenda A. Davis"],
+  },
+  {
+    role: "Secondary Sponsor",
+    names: [
+      "Luna, Cloud",
+      "Mary Grace P. Delos Reyes",
+      "Jeanette D. Abgao",
+      "Noelyn D. Rico",
+    ],
+  },
 ];
 
 export default function Home() {
@@ -198,7 +203,11 @@ export default function Home() {
           </h2>
           <ol className="m-0 mt-[calc(48*var(--px))] grid list-none grid-cols-2 gap-x-[calc(120*var(--px))] gap-y-[calc(64*var(--px))] p-0 max-md:grid-cols-1 max-md:gap-y-[calc(52*var(--px))]">
             {timeline.map((item) => (
-              <li data-gsap="item" key={item.time} className="flex flex-col items-center gap-[calc(8*var(--px))] text-center">
+              <li
+                data-gsap="item"
+                key={item.time}
+                className="flex flex-col items-center gap-[calc(8*var(--px))] text-center last:odd:col-span-2 max-md:last:odd:col-span-1"
+              >
                 <p className="m-0 font-narrow [font-stretch:condensed] leading-normal text-ink text-[calc(44*var(--px))]">
                   {item.time}
                 </p>
@@ -219,27 +228,28 @@ export default function Home() {
             <br />
             Feel free to draw inspirations from these tones.
           </p>
-          <ul aria-label="Suggested tones" className="m-0 mt-[calc(40*var(--px))] flex list-none gap-[calc(56*var(--px))] p-0">
-            {dressTones.map((pair, i) => (
-              <li data-gsap="item" key={i} className="flex">
-                {pair.map((tone, j) => (
-                  <span
-                    key={tone.hex}
-                    role="img"
-                    aria-label={tone.name}
-                    title={tone.name}
-                    style={{ backgroundColor: tone.hex }}
-                    className={`block size-[calc(88*var(--px))] rounded-full shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] ${j > 0 ? "-ml-[calc(16*var(--px))]" : ""}`}
-                  />
-                ))}
+          <ul aria-label="Suggested tones" className="m-0 mt-[calc(40*var(--px))] flex list-none justify-center p-0">
+            {dressTones.map((tone, i) => (
+              <li
+                data-gsap="item"
+                key={tone.hex}
+                className={i > 0 ? "-ml-[calc(16*var(--px))]" : ""}
+              >
+                <span
+                  role="img"
+                  aria-label={tone.name}
+                  title={tone.name}
+                  style={{ backgroundColor: tone.hex }}
+                  className="block size-[calc(88*var(--px))] rounded-full shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)]"
+                />
               </li>
             ))}
           </ul>
         </section>
 
-        {/* Venue & Direction */}
-        <section data-gsap="section" aria-labelledby="direction-title" className="grid grid-cols-2 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))] max-md:grid-cols-1 max-md:gap-y-[calc(48*var(--px))] max-md:pt-[calc(110*var(--px))]">
-          {/* Venue card — double gold frame (below the Direction copy on mobile) */}
+        {/* Venue */}
+        <section data-gsap="section" aria-labelledby="venue-title" className="grid grid-cols-2 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))] max-md:grid-cols-1 max-md:gap-y-[calc(48*var(--px))] max-md:pt-[calc(110*var(--px))]">
+          {/* Venue card — double gold frame (below the Venue copy on mobile) */}
           <div data-gsap="item" className="rounded-[calc(30*var(--px))] border-[calc(2*var(--px))] border-gold p-[calc(10*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] max-md:order-last">
             <div className="flex flex-col items-center gap-[calc(24*var(--px))] rounded-[calc(22*var(--px))] border-[calc(1*var(--px))] border-gold/60 px-[calc(32*var(--px))] py-[calc(36*var(--px))]">
               <p className={`${bodyCaps} max-w-[calc(380*var(--px))] text-center`}>
@@ -264,10 +274,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Direction copy */}
+          {/* Venue copy */}
           <div data-gsap="item" className="flex flex-col items-center gap-[calc(16*var(--px))] text-center">
-            <h2 id="direction-title" className={subheading}>
-              Direction
+            <h2 id="venue-title" className={subheading}>
+              Venue
             </h2>
             <h3 className={`${title} mt-[calc(8*var(--px))]`}>By Car</h3>
             <p className={`${bodyCaps} max-w-[calc(400*var(--px))]`}>
@@ -279,6 +289,62 @@ export default function Home() {
             <h3 className={title}>By Public Transportation</h3>
             <p className={`${bodyCaps} max-w-[calc(400*var(--px))]`}>
               Public transportation access to the venue may be limited.
+              <br />
+              Guests traveling without a car may consider using local transit services followed by a short taxi or
+              rideshare trip to the location.
+            </p>
+          </div>
+        </section>
+
+        {/* Reception */}
+        <section data-gsap="section" aria-labelledby="reception-title" className="grid grid-cols-2 items-center gap-x-[calc(120*var(--px))] pt-[calc(160*var(--px))] max-md:grid-cols-1 max-md:gap-y-[calc(48*var(--px))] max-md:pt-[calc(110*var(--px))]">
+          {/* Reception card — double gold frame (below the Reception copy on mobile) */}
+          <div data-gsap="item" className="rounded-[calc(30*var(--px))] border-[calc(2*var(--px))] border-gold p-[calc(10*var(--px))] shadow-[0_calc(4*var(--px))_calc(4*var(--px))_0_rgba(0,0,0,0.25)] max-md:order-last">
+            <div className="flex flex-col items-center gap-[calc(24*var(--px))] rounded-[calc(22*var(--px))] border-[calc(1*var(--px))] border-gold/60 px-[calc(32*var(--px))] py-[calc(36*var(--px))]">
+              <div className="flex flex-col items-center gap-[calc(6*var(--px))] text-center">
+                <h3 className={title}>{RECEPTION_VENUE}</h3>
+                <a
+                  href={RECEPTION_MAP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${bodyCaps} underline decoration-gold/70 underline-offset-[calc(4*var(--px))] transition-colors hover:text-gold`}
+                >
+                  {RECEPTION_ADDRESS}
+                </a>
+              </div>
+              <iframe
+                title={`Map to ${RECEPTION_VENUE}`}
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(`${RECEPTION_VENUE}, ${RECEPTION_ADDRESS}`)}&z=16&output=embed`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-[calc(260*var(--px))] w-full rounded-[calc(8*var(--px))] border-0 max-md:h-[calc(340*var(--px))]"
+              />
+              <a
+                href={RECEPTION_MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${button} w-full`}
+              >
+                Reception Direction
+              </a>
+            </div>
+          </div>
+
+          {/* Reception copy */}
+          <div data-gsap="item" className="flex flex-col items-center gap-[calc(16*var(--px))] text-center">
+            <h2 id="reception-title" className={subheading}>
+              Reception
+            </h2>
+            <h3 className={`${title} mt-[calc(8*var(--px))]`}>By Car</h3>
+            <p className={`${bodyCaps} max-w-[calc(400*var(--px))]`}>
+              On-site parking will be available for all guests.
+              <br />
+              We recommend arriving a little earlier to ensure a smooth and relaxed journey to the reception.
+            </p>
+            <hr aria-hidden className="my-[calc(24*var(--px))] h-[calc(1*var(--px))] w-[calc(320*var(--px))] border-0 bg-gold" />
+            <h3 className={title}>By Public Transportation</h3>
+            <p className={`${bodyCaps} max-w-[calc(400*var(--px))]`}>
+              Public transportation access to the reception may be limited.
               <br />
               Guests traveling without a car may consider using local transit services followed by a short taxi or
               rideshare trip to the location.
@@ -301,7 +367,11 @@ export default function Home() {
               {entourage.map((group) => (
                 <div data-gsap="item" key={group.role} className="flex flex-col items-center gap-[calc(6*var(--px))]">
                   <dt className={title}>{group.role}</dt>
-                  <dd className={`${bodyCaps} m-0`}>{group.names}</dd>
+                  {group.names.map((line) => (
+                    <dd key={line} className={`${bodyCaps} m-0`}>
+                      {line}
+                    </dd>
+                  ))}
                 </div>
               ))}
             </dl>
